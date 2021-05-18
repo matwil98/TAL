@@ -65,7 +65,11 @@ public class Main {
         MyFrame frame = new MyFrame();
         frame.setContentPane(new MyPanel());
         frame.setVisible(true);
+
+        System.out.println("fb4");
     }
+
+
 
 
 }
