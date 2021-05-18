@@ -62,15 +62,20 @@ public class Main {
 //        System.out.println("Time of alghortim RECURSIVE: " + (stopRecursiveAlghoritm - startRecursiveAlghoritm));
 //
 //
-        MyFrame frame = new MyFrame();
-        frame.setContentPane(new MyPanel());
-        frame.setVisible(true);
+//        MyFrame frame = new MyFrame();
+//        frame.setContentPane(new MyPanel());
+//        frame.setVisible(true);
 
-        System.out.println("fb4");
-        System.out.println("Response commit");
+        int[] weights = new int[]{2, 2, 3, 15, 1, 4, 5, 6};
+        int[] values = new int[]{40, 160, 70, 300, 70, 25, 25, 180};
+
+        Knapsack knapsack = new Knapsack();
+        ArrayList<Integer> conWeights = knapsack.convertTableToArrayList(weights);
+        ArrayList<Integer> conValues = knapsack.convertTableToArrayList(values);
+        knapsack.convertTableToArrayList(values);
+        knapsack.solveKnapsackDP(conWeights,conValues,8,15);
+
     }
-
-
 
 
 }
