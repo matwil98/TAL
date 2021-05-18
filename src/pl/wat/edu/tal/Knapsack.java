@@ -29,10 +29,8 @@ public class Knapsack {
             }
         }
         System.out.println(knapsackTable[numberOfItems][capacity]);
-
         return knapsackTable[numberOfItems][capacity];
     }
-
 
     public int knapsackRecursive(int[] w, int[] v, int n, int W) {
         if (n <= 0) {
@@ -45,7 +43,6 @@ public class Knapsack {
             System.out.println(result);
             return result;
         }
-
     }
 
     public Knapsack() {
@@ -60,14 +57,12 @@ public class Knapsack {
         }
     }
 
-
     public ArrayList<Integer> solve() {
         ArrayList<Float> fraction = new ArrayList<>();
         ArrayList<Integer> results_objects = new ArrayList<>();
         for (int i = 0; i < objects.size(); i++) {
             fraction.add(profits.get(i) / weights.get(i));
         }
-
         int maxObjectProfit;
         float sumOfWeights = 0;
         float sumOfProfits = 0;
@@ -93,15 +88,12 @@ public class Knapsack {
 
     public ArrayList<Integer> solveKnapsackDP(ArrayList<Integer> weightsI, ArrayList<Integer> valuesI, int numOfItems, int capacity) {
 
-
         ArrayList<Integer> takenElements = new ArrayList<>();
         ArrayList<Integer> timesWeightAndValue = new ArrayList<Integer>();
-
         int[][] knapsackTableSave = new int[numOfItems + 1][capacity + 1];
         for (int j = 0; j < knapsackTableSave.length; j++) {
             knapsackTableSave[0][j] = 0;
         }
-
         for (int i = 1; i <= numOfItems; i++) {
             for (int w = 1; w <= capacity; w++) {
 
@@ -110,10 +102,8 @@ public class Knapsack {
                 } else {
                     knapsackTableSave[i][w] = Math.max(knapsackTableSave[i - 1][w],
                             knapsackTableSave[i - 1][w - weightsI.get(i - 1)] + valuesI.get(i - 1));
-
                 }
             }
-
         }
 
         int currentKnapsackCapacity = capacity;
@@ -123,19 +113,15 @@ public class Knapsack {
                 timesWeightAndValue.add(valuesI.get(i - 1));
                 currentKnapsackCapacity -= weightsI.get(i - 1);
                 System.out.println(currentKnapsackCapacity);
-
             } else {
                 System.out.println("Przedmiot nr " + i + " nie jest pakowany do koszyka");
             }
         }
-
         System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
         System.out.println("Zebrane elementy");
         System.out.println(takenElements);
         return takenElements;
-
     }
-
 
     public int getIndiceMax(ArrayList<Float> fraction) {
         float maxValue = 0;
