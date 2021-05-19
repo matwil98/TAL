@@ -10,23 +10,47 @@ public class Knapsack {
     int maxWeights;
     String sumProfits_sumWeights;
 
-        public int solveKnapsackProblemTest(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems) {
-
+    public int solveKnapsackProblemTest(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems) {
+        ArrayList<Integer> takenElements = new ArrayList<>();
+        if (countWeightsOfAllItems(weights) <= capacity) {
+            System.out.println("You can pack all items. Using alghoritm is unnecessary");
+        } else if (numberOfItems <= 0) {
+            System.out.println("You have to have positive number of items!");
+        }
         int[][] knapsackTable = new int[numberOfItems + 1][capacity + 1];
         for (int j = 0; j <= capacity; j++) knapsackTable[0][j] = 0;
 
         for (int i = 1; i <= numberOfItems; i++) {
             for (int w = 0; w <= capacity; w++) {
-                if (weights.get(i-1) > w) {
+                if (weights.get(i - 1) > w) {
                     knapsackTable[i][w] = knapsackTable[i - 1][w];
                 } else {
                     knapsackTable[i][w] = Math.max(
                             knapsackTable[i - 1][w],
                             knapsackTable[i - 1]
-                                    [w - weights.get(i-1)] + values.get(i-1));
+                                    [w - weights.get(i - 1)] + values.get(i - 1));
                 }
             }
         }
+
+        int currentKnapsackCapacity = capacity;
+        ArrayList<Integer> timesWeightAndValue = new ArrayList<>();
+            for (int i = numberOfItems; i >= 1; i--) {
+                if(knapsackTable[i][currentKnapsackCapacity]> knapsackTable[i-1][currentKnapsackCapacity]){
+                    takenElements.add(i);
+                    timesWeightAndValue.add(values.get(i-1));
+                    currentKnapsackCapacity -= weights.get(i-1);
+                    System.out.println("Przedmiot nr: " + i + " jest pakowany do koszyka");
+                } else{
+                    System.out.println("Przedmiot nr " + i + " nie jest pakowany do koszyka");
+                }
+                System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
+
+        }
+        System.out.println(takenElements);
+//        return takenElements;
+
+
         System.out.println(knapsackTable[numberOfItems][capacity]);
         return knapsackTable[numberOfItems][capacity];
     }
@@ -85,49 +109,51 @@ public class Knapsack {
         return results_objects;
     }
 
-    public ArrayList<Integer> solveKnapsackDP(int[] weights, int[] values, int numOfItems, int capacity) {
-        ArrayList<Integer> takenElements = new ArrayList<>();
-        if (countWeightsOfAllItems(weights) <= capacity) {
-            System.out.println("You can pack all items. Using alghoritm is unnecessary");
-        } else if (numOfItems <= 0) {
-            System.out.println("You have to have positive number of items!");
-        } else {
-            ArrayList<Integer> timesWeightAndValue = new ArrayList<>();
-            int[][] knapsackTableSave = new int[numOfItems + 1][capacity + 1];
-            for (int j = 0; j < knapsackTableSave.length; j++) {
-                knapsackTableSave[0][j] = 0;
-            }
-            for (int i = 1; i <= numOfItems; i++) {
-                for (int w = 1; w <= capacity; w++) {
-                    if (weights[i - 1] > w) {
-                        knapsackTableSave[i][w] = knapsackTableSave[i - 1][w];
-                    } else {
-                        knapsackTableSave[i][w] = Math.max(knapsackTableSave[i - 1][w],
-                                knapsackTableSave[i - 1][w - weights[i - 1]] + values[i - 1]);
-                    }
-                }
-            }
+//    public ArrayList<Integer> solveKnapsackDP(int[] weights, int[] values, int numOfItems, int capacity) {
+//        ArrayList<Integer> takenElements = new ArrayList<>();
+//        if (countWeightsOfAllItems(weights) <= capacity) {
+//            System.out.println("You can pack all items. Using alghoritm is unnecessary");
+//        } else if (numOfItems <= 0) {
+//            System.out.println("You have to have positive number of items!");
+//        } else {
+//            ArrayList<Integer> timesWeightAndValue = new ArrayList<>();
+//            int[][] knapsackTableSave = new int[numOfItems + 1][capacity + 1];
+//            for (int j = 0; j < knapsackTableSave.length; j++) {
+//                knapsackTableSave[0][j] = 0;
+//            }
+//            for (int i = 1; i <= numOfItems; i++) {
+//                for (int w = 1; w <= capacity; w++) {
+//                    if (weights[i - 1] > w) {
+//                        knapsackTableSave[i][w] = knapsackTableSave[i - 1][w];
+//                    } else {
+//                        knapsackTableSave[i][w] = Math.max(knapsackTableSave[i - 1][w],
+//                                knapsackTableSave[i - 1][w - weights[i - 1]] + values[i - 1]);
+//                    }
+//                }
+//            }
+//
+//            int currentKnapsackCapacity = capacity;
+//            for (int i = numOfItems; i >= 1; i--) {
+//                if (knapsackTableSave[i][currentKnapsackCapacity] > knapsackTableSave[i - 1][currentKnapsackCapacity]) {
+//                    takenElements.add(i);
+//                    timesWeightAndValue.add(values[i - 1]);
+//                    currentKnapsackCapacity -= weights[i - 1];
+//                } else {
+//                    System.out.println("Przedmiot nr " + i + " nie jest pakowany do koszyka");
+//                }
+//            }
+//            System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
+//            System.out.println("Zebrane elementy");
+//            System.out.println(takenElements);
+//
+//        }
+//        return takenElements;
+//    }
 
-            int currentKnapsackCapacity = capacity;
-            for (int i = numOfItems; i >= 1; i--) {
-                if (knapsackTableSave[i][currentKnapsackCapacity] > knapsackTableSave[i - 1][currentKnapsackCapacity]) {
-                    takenElements.add(i);
-                    timesWeightAndValue.add(values[i - 1]);
-                    currentKnapsackCapacity -= weights[i - 1];
-                } else {
-                    System.out.println("Przedmiot nr " + i + " nie jest pakowany do koszyka");
-                }
-            }
-            System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
-            System.out.println("Zebrane elementy");
-            System.out.println(takenElements);
-
-        }
-        return takenElements;
-    }
-
-    /**This method finds and returns the index of the elemnt with max value from
+    /**
+     * This method finds and returns the index of the elemnt with max value from
      * the ArrayList
+     *
      * @param fraction
      * @return maxIndice
      */
@@ -155,26 +181,29 @@ public class Knapsack {
     /**
      * This method counts the weights of all table's elements
      * Method is used to verify whether sum of elements is lower than knapsack capacity
-     * @param t
+     *
+     * @param arrayList
      * @return sumOfItems
      */
-    public int countWeightsOfAllItems(int[] t) {
+    public int countWeightsOfAllItems(ArrayList<Integer> arrayList) {
         int sumOfItems = 0;
-        for (int i = 0; i < t.length; i++) {
-            sumOfItems += t[i];
+        for (int i = 0; i < arrayList.size(); i++) {
+            sumOfItems += arrayList.get(i);
         }
         return sumOfItems;
     }
 
-    /**Method which convert parameters given by user to ArrayList of elements weights and values
+    /**
+     * Method which convert parameters given by user to ArrayList of elements weights and values
+     *
      * @param number
      * @param scope
      * @return arrayList
      */
-    public ArrayList<Integer> convertToArrayList(int number, int scope){
+    public ArrayList<Integer> convertToArrayList(int number, int scope) {
         ArrayList<Integer> arrayList = new ArrayList<>();
         Random random = new Random();
-        for(int i = 0; i<number; i++){
+        for (int i = 0; i < number; i++) {
             int randomValue = random.nextInt(scope) + 1;
             arrayList.add(randomValue);
         }

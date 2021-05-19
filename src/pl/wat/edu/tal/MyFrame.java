@@ -13,12 +13,19 @@ public class MyFrame extends JFrame {
 
     public MyFrame() {
         super("Discrete Knapsack problem");
+
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon imageIcon = new ImageIcon("knapsack.jpg");
+        setIconImage(imageIcon.getImage());
+
+
         setLocation(100, 100);
         myPanel = new MyPanel();
         setContentPane(myPanel);
+
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
     }
 
