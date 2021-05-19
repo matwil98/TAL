@@ -44,17 +44,17 @@ public class Knapsack {
         }
     }
 
-//    public Knapsack() {
-//    }
-//
-//    public Knapsack(ArrayList<Float> weights, ArrayList<Float> values, int numObjects, int maxWeights) {
-//        this.profits = values;
-//        this.weights = weights;
-//        this.maxWeights = maxWeights;
-//        for (int i = 0; i < numObjects; i++) {
-//            objects.add(i);
-//        }
-//    }
+    public Knapsack() {
+    }
+
+    public Knapsack(ArrayList<Float> weights, ArrayList<Float> values, int numObjects, int maxWeights) {
+        this.profits = values;
+        this.weights = weights;
+        this.maxWeights = maxWeights;
+        for (int i = 0; i < numObjects; i++) {
+            objects.add(i);
+        }
+    }
 
     public ArrayList<Integer> solve() {
         ArrayList<Float> fraction = new ArrayList<>();
@@ -166,7 +166,11 @@ public class Knapsack {
         return sumOfItems;
     }
 
-
+    /**Method which convert parameters given by user to ArrayList of elements weights and values
+     * @param number
+     * @param scope
+     * @return arrayList
+     */
     public ArrayList<Integer> convertToArrayList(int number, int scope){
         ArrayList<Integer> arrayList = new ArrayList<>();
         Random random = new Random();
