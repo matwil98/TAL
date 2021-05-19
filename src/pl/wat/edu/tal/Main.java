@@ -65,15 +65,19 @@ public class Main {
 //        MyFrame frame = new MyFrame();
 //        frame.setContentPane(new MyPanel());
 //        frame.setVisible(true);
+//
+//        int[] weights = new int[]{2, 2, 3, 15, 1, 4, 5, 6};
+//        int[] values = new int[]{40, 160, 70, 300, 70, 25, 25, 180};
+//
+//        Knapsack knapsack = new Knapsack();
+//        knapsack.solveKnapsackDP(weights,values,8,15);
+//
+//        knapsack.countWeightsOfAllItems(weights);
 
-        int[] weights = new int[]{2, 2, 3, 15, 1, 4, 5, 6};
-        int[] values = new int[]{40, 160, 70, 300, 70, 25, 25, 180};
 
-        Knapsack knapsack = new Knapsack();
-        ArrayList<Integer> conWeights = knapsack.convertTableToArrayList(weights);
-        ArrayList<Integer> conValues = knapsack.convertTableToArrayList(values);
-        knapsack.convertTableToArrayList(values);
-        knapsack.solveKnapsackDP(conWeights,conValues,8,15);
+        MyFrame myFrame = new MyFrame();
+        myFrame.setVisible(true);
+
 
     }
 
