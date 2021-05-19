@@ -7,7 +7,6 @@ public class Knapsack {
     ArrayList<Integer> objects = new ArrayList<>();
     ArrayList<Float> profits;
     ArrayList<Float> weights;
-
     int maxWeights;
     String sumProfits_sumWeights;
 
@@ -45,17 +44,17 @@ public class Knapsack {
         }
     }
 
-    public Knapsack() {
-    }
-
-    public Knapsack(ArrayList<Float> weights, ArrayList<Float> values, int numObjects, int maxWeights) {
-        this.profits = values;
-        this.weights = weights;
-        this.maxWeights = maxWeights;
-        for (int i = 0; i < numObjects; i++) {
-            objects.add(i);
-        }
-    }
+//    public Knapsack() {
+//    }
+//
+//    public Knapsack(ArrayList<Float> weights, ArrayList<Float> values, int numObjects, int maxWeights) {
+//        this.profits = values;
+//        this.weights = weights;
+//        this.maxWeights = maxWeights;
+//        for (int i = 0; i < numObjects; i++) {
+//            objects.add(i);
+//        }
+//    }
 
     public ArrayList<Integer> solve() {
         ArrayList<Float> fraction = new ArrayList<>();
@@ -164,8 +163,19 @@ public class Knapsack {
         for (int i = 0; i < t.length; i++) {
             sumOfItems += t[i];
         }
-        System.out.println(sumOfItems);
         return sumOfItems;
+    }
+
+
+    public ArrayList<Integer> convertToArrayList(int number, int scope){
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        Random random = new Random();
+        for(int i = 0; i<number; i++){
+            int randomValue = random.nextInt(scope) + 1;
+            arrayList.add(randomValue);
+        }
+        System.out.println(arrayList);
+        return arrayList;
     }
 
 }

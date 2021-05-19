@@ -18,6 +18,7 @@ public class MyFrame extends JFrame {
         setLocation(100, 100);
         myPanel = new MyPanel();
         setContentPane(myPanel);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
