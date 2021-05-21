@@ -75,11 +75,9 @@ public class Main {
 //
 //        knapsack.countWeightsOfAllItems(weights);
 
-
         MyFrame myFrame = new MyFrame();
+        myFrame.getContentPane();
         myFrame.setVisible(true);
-
-
 
     }
 

@@ -1,11 +1,11 @@
 package pl.wat.edu.tal;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class MyPanel extends JPanel implements ActionListener {
@@ -20,6 +20,7 @@ public class MyPanel extends JPanel implements ActionListener {
     private JTextField resultTextfield;
     private JLabel timeFieldLabel;
     private JTextField timeField;
+    private JLabel optimumResult;
 
     private JLabel values;
     private JTextField valuesTextField;
@@ -27,14 +28,16 @@ public class MyPanel extends JPanel implements ActionListener {
     private JButton resultButton;
     private JTextArea areaOfWeights;
     private JTextArea areaOfValues;
-    private JButton createButton;
 
     private ArrayList<Integer> arrayList;
     private ArrayList<Integer> arrayList1;
 
     public MyPanel() {
-        setLayout(new GridBagLayout());
         JPanel jPanel = new JPanel();
+     setBackground(new Color(200,200,200,200));
+        jPanel.setBorder(BorderFactory.createEmptyBorder(20,5,20,5));
+        jPanel.setLayout(new GridLayout(4,2, 10, 5));
+        jPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         knapsackCapacity = new JLabel("Capacity");
         jPanel.add(knapsackCapacity);
         knapsackCapacityField = new JTextField(6);
@@ -56,21 +59,19 @@ public class MyPanel extends JPanel implements ActionListener {
         jButton = new JButton("Draw");
         jButton.addActionListener(this);
         jPanel.add(jButton);
-        jPanel.add(areaOfWeights);
-        jPanel.add(areaOfValues);
         resultButton = new JButton("DP alghoritm");
         resultButton.addActionListener(this);
         jPanel.add(resultButton);
+        jPanel.add(areaOfWeights);
+        jPanel.add(areaOfValues);
+        optimumResult = new JLabel("Optimum result");
+        jPanel.add(optimumResult);
         resultTextfield = new JTextField(6);
         jPanel.add(resultTextfield);
-        timeFieldLabel = new JLabel("Running time of the algorithm");
+        timeFieldLabel = new JLabel("Time of running alghoritm");
         jPanel.add(timeFieldLabel);
         timeField = new JTextField(10);
         jPanel.add(timeField);
-        createButton = createButton("New frame button", 0, 50, 100, "JAZDAAA");
-        createButton.setToolTipText("Dajesz Mati");
-        jPanel.add(createButton);
-
         add(jPanel);
     }
 
@@ -85,8 +86,8 @@ public class MyPanel extends JPanel implements ActionListener {
             int scopeOfValues = Integer.parseInt(valuesTextField.getText());
             String[] stringList;
             String[] stringList2;
-            String napis = "";
-            String napis2 = "";
+            StringBuilder napis = new StringBuilder();
+            StringBuilder napis2 = new StringBuilder();
             arrayList = knapsack.convertToArrayList(number, scopeOfWeights);
             arrayList1 = knapsack.convertToArrayList(number, scopeOfValues);
             for (int i = 0; i < number; i++) {
@@ -94,34 +95,23 @@ public class MyPanel extends JPanel implements ActionListener {
                 stringList2 = new String[number];
                 stringList[i] = arrayList.get(i).toString();
                 stringList2[i] = arrayList1.get(i).toString();
-                napis += stringList[i] + ",";
-                napis2 += stringList2[i] + ",";
+                napis.append(Arrays.toString(stringList[i].split(",")));
+                napis2.append(Arrays.toString(stringList2[i].split(",")));
             }
-            areaOfWeights.setText(napis);
-            areaOfValues.setText(napis2);
+            areaOfWeights.setText(napis.toString());
+            areaOfValues.setText(napis2.toString());
         } else if (source == resultButton) {
-            System.out.println("Podaj liczbę elementów");
             Scanner sc = new Scanner(System.in);
-            int liczba = sc.nextInt();
+            int numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
             int knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
             double startTimeAlghoritm = System.currentTimeMillis();
-            int optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, liczba);
+            int optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, numOfObjects);
             double endTimeAlghoritm = System.currentTimeMillis();
             double diference = endTimeAlghoritm - startTimeAlghoritm;
             resultTextfield.setText(String.valueOf(optimum));
             timeField.setText(diference + " ms");
-        } else if (source == createButton) {
-            JFrame jFrame = new JFrame("Hello new Frame clicked!");
-            jFrame.setVisible(true);
-            jFrame.setSize(200, 200);
-            jFrame.setLocationRelativeTo(null);
-            JLabel label = new JLabel("You clicked me!");
-            JPanel jPanel = new JPanel();
-            jPanel.add(label);
-            jFrame.add(jPanel);
         }
     }
-
     public JButton createButton(String text, int x, int y, int width, String actionCommand) {
         JButton jButton1 = new JButton(text);
         jButton1.setBackground(new Color(140, 210, 38));
