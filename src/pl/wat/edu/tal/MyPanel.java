@@ -139,11 +139,13 @@ public class MyPanel extends JPanel implements ActionListener {
             double difference = endTimeAlgorithm - startTimeAlgorithm;
             resultTextfield.setText(String.valueOf(optimum[numOfObjects][knapsackCapacity]));
             timeField.setText(difference + " ms");
-            String[][] tablica = knapsack.printOptimumMatrix(optimum);
+            ArrayList<Integer> testArray = knapsack.takenElements(optimum, arrayList, arrayList1, numOfObjects, knapsackCapacity);
+            String[][] matrix = knapsack.printOptimumMatrix(optimum);
+            ArrayList<Integer> takenElements = knapsack.takenElements(optimum,arrayList,arrayList1,numOfObjects,knapsackCapacity);
 
             JFrame frame = new JFrame();
-            MatrixPanel matrixPanel = new MatrixPanel(tablica);
-            frame.setTitle("Matrix of optimus ");
+            MatrixPanel matrixPanel = new MatrixPanel(matrix, takenElements);
+            frame.setTitle("Matrix of optimum results ");
             frame.add(matrixPanel);
             frame.setVisible(true);
             frame.pack();
@@ -171,7 +173,7 @@ public class MyPanel extends JPanel implements ActionListener {
         if (action == "Flushdata") {
             JTextField tmp;
             for (Component component : jPanel.getComponents()) {
-                if (component.getClass().toString().contains("javax.swing.JTextField")) {
+                if (component.getClass().toString().contains("javax.swing.JTextField") || component.getClass().toString().contains("javax.swing.JFrame")) {
                     tmp = (JTextField) component;
                     tmp.setText(null);
                 }

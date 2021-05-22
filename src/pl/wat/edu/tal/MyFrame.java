@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class MyFrame extends JFrame {
 
-
     private final int WIDTH = 300;
     private final int HEIGHT = 200;
 
@@ -28,6 +27,5 @@ public class MyFrame extends JFrame {
         pack();
         setVisible(true);
     }
-
 
 }

@@ -33,10 +33,15 @@ public class Knapsack {
             }
         }
 
+        return knapsackTable;
+    }
+
+    public ArrayList<Integer> takenElements(int[][] t, ArrayList<Integer> weights, ArrayList<Integer> values, int numOfItems, int capacity) {
+        ArrayList<Integer> takenElements = new ArrayList<>();
         int currentKnapsackCapacity = capacity;
         ArrayList<Integer> timesWeightAndValue = new ArrayList<>();
-        for (int i = numberOfItems; i >= 1; i--) {
-            if (knapsackTable[i][currentKnapsackCapacity] > knapsackTable[i - 1][currentKnapsackCapacity]) {
+        for (int i = numOfItems; i >= 1; i--) {
+            if (t[i][currentKnapsackCapacity] > t[i - 1][currentKnapsackCapacity]) {
                 takenElements.add(i);
                 timesWeightAndValue.add(values.get(i - 1));
                 currentKnapsackCapacity -= weights.get(i - 1);
@@ -47,11 +52,8 @@ public class Knapsack {
             System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
 
         }
-        System.out.println(takenElements);
-//        return takenElements;
-        System.out.println(knapsackTable[numberOfItems][capacity]);
-//        return knapsackTable[numberOfItems][capacity];
-        return knapsackTable;
+        System.out.println("Nowa metoda zwracania elementów: " + takenElements);
+        return takenElements;
     }
 
     public int exactAlgorithm(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems) {
@@ -112,47 +114,6 @@ public class Knapsack {
         }
         return results_objects;
     }
-
-//    public ArrayList<Integer> solveKnapsackDP(int[] weights, int[] values, int numOfItems, int capacity) {
-//        ArrayList<Integer> takenElements = new ArrayList<>();
-//        if (countWeightsOfAllItems(weights) <= capacity) {
-//            System.out.println("You can pack all items. Using alghoritm is unnecessary");
-//        } else if (numOfItems <= 0) {
-//            System.out.println("You have to have positive number of items!");
-//        } else {
-//            ArrayList<Integer> timesWeightAndValue = new ArrayList<>();
-//            int[][] knapsackTableSave = new int[numOfItems + 1][capacity + 1];
-//            for (int j = 0; j < knapsackTableSave.length; j++) {
-//                knapsackTableSave[0][j] = 0;
-//            }
-//            for (int i = 1; i <= numOfItems; i++) {
-//                for (int w = 1; w <= capacity; w++) {
-//                    if (weights[i - 1] > w) {
-//                        knapsackTableSave[i][w] = knapsackTableSave[i - 1][w];
-//                    } else {
-//                        knapsackTableSave[i][w] = Math.max(knapsackTableSave[i - 1][w],
-//                                knapsackTableSave[i - 1][w - weights[i - 1]] + values[i - 1]);
-//                    }
-//                }
-//            }
-//
-//            int currentKnapsackCapacity = capacity;
-//            for (int i = numOfItems; i >= 1; i--) {
-//                if (knapsackTableSave[i][currentKnapsackCapacity] > knapsackTableSave[i - 1][currentKnapsackCapacity]) {
-//                    takenElements.add(i);
-//                    timesWeightAndValue.add(values[i - 1]);
-//                    currentKnapsackCapacity -= weights[i - 1];
-//                } else {
-//                    System.out.println("Przedmiot nr " + i + " nie jest pakowany do koszyka");
-//                }
-//            }
-//            System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
-//            System.out.println("Zebrane elementy");
-//            System.out.println(takenElements);
-//
-//        }
-//        return takenElements;
-//    }
 
     /**
      * This method finds and returns the index of the elemnt with max value from
@@ -222,7 +183,8 @@ public class Knapsack {
         return arrayList;
     }
 
-    /** Method which converts matrix of Integer to matrix of String
+    /**
+     * Method which converts matrix of Integer to matrix of String
      *
      * @param t
      * @return
@@ -236,6 +198,8 @@ public class Knapsack {
         }
         return table;
     }
+
 }
+
 
 
