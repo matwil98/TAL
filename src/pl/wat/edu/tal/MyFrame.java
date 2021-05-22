@@ -18,12 +18,11 @@ public class MyFrame extends JFrame {
         setBackground(new Color(100, 100, 100));
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon imageIcon = new ImageIcon("plecak.jpg");
+        ImageIcon imageIcon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/plecak.jpg");
         setIconImage(imageIcon.getImage());
         setLocation(100, 100);
 
         myPanel = new MyPanel();
-
         setContentPane(myPanel);
         setLocationRelativeTo(null);
         pack();

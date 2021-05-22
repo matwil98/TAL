@@ -10,7 +10,7 @@ public class Knapsack {
     int maxWeights;
     String sumProfits_sumWeights;
 
-    public int solveKnapsackProblemTest(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems) {
+    public int[][] solveKnapsackProblemTest(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems) {
         ArrayList<Integer> takenElements = new ArrayList<>();
         if (countWeightsOfAllItems(weights) <= capacity) {
             System.out.println("You can pack all items. Using alghoritm is unnecessary");
@@ -35,37 +35,41 @@ public class Knapsack {
 
         int currentKnapsackCapacity = capacity;
         ArrayList<Integer> timesWeightAndValue = new ArrayList<>();
-            for (int i = numberOfItems; i >= 1; i--) {
-                if(knapsackTable[i][currentKnapsackCapacity]> knapsackTable[i-1][currentKnapsackCapacity]){
-                    takenElements.add(i);
-                    timesWeightAndValue.add(values.get(i-1));
-                    currentKnapsackCapacity -= weights.get(i-1);
-                    System.out.println("Przedmiot nr: " + i + " jest pakowany do koszyka");
-                } else{
-                    System.out.println("Przedmiot nr " + i + " nie jest pakowany do koszyka");
-                }
-                System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
+        for (int i = numberOfItems; i >= 1; i--) {
+            if (knapsackTable[i][currentKnapsackCapacity] > knapsackTable[i - 1][currentKnapsackCapacity]) {
+                takenElements.add(i);
+                timesWeightAndValue.add(values.get(i - 1));
+                currentKnapsackCapacity -= weights.get(i - 1);
+                System.out.println("Przedmiot nr: " + i + " jest pakowany do koszyka");
+            } else {
+                System.out.println("Przedmiot nr " + i + " nie jest pakowany do koszyka");
+            }
+            System.out.println("Wartość zabranych przedmiotów: " + countElementsOfArray(timesWeightAndValue));
 
         }
         System.out.println(takenElements);
 //        return takenElements;
-
-
         System.out.println(knapsackTable[numberOfItems][capacity]);
-        return knapsackTable[numberOfItems][capacity];
+//        return knapsackTable[numberOfItems][capacity];
+        return knapsackTable;
     }
 
-    public int knapsackRecursive(int[] w, int[] v, int n, int W) {
-        if (n <= 0) {
-            return 0;
-        } else if (w[n - 1] > W) {
-            return knapsackRecursive(w, v, n - 1, W);
+    public int exactAlgorithm(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems) {
+        ArrayList<Integer> takenElements = new ArrayList<>();
+        int optimum = 0;
+        if (countWeightsOfAllItems(weights) <= capacity) {
+            System.out.println("You can pack all items. Using alghoritm is unnecessary");
+        } else if (numberOfItems <= 0) {
+            System.out.println("You have to have positive number of items!");
+        } else if (weights.get(numberOfItems - 1) > capacity) {
+            return exactAlgorithm(weights, values, capacity, numberOfItems - 1);
         } else {
-            int result = Math.max(knapsackRecursive(w, v, n - 1, W), v[n - 1]
-                    + knapsackRecursive(w, v, n - 1, W - w[n - 1]));
-            System.out.println(result);
-            return result;
+            optimum = Math.max(exactAlgorithm(weights, values, capacity, numberOfItems - 1),
+                    values.get(numberOfItems - 1) + exactAlgorithm(weights, values, capacity - weights.get(numberOfItems - 1),
+                            numberOfItems - 1));
+            System.out.println("Optimum by exact algorithm: " + optimum);
         }
+        return optimum;
     }
 
     public Knapsack() {
@@ -170,6 +174,13 @@ public class Knapsack {
         return maxIndice;
     }
 
+    /**
+     * Method which sums elements from ArrayList, using in checking
+     * whether sum of elemnts is lower than knapsack capacity
+     *
+     * @param arrayList
+     * @return
+     */
     public int countElementsOfArray(ArrayList<Integer> arrayList) {
         int amount = 0;
         for (Integer i : arrayList) {
@@ -211,6 +222,20 @@ public class Knapsack {
         return arrayList;
     }
 
+    /** Method which converts matrix of Integer to matrix of String
+     *
+     * @param t
+     * @return
+     */
+    public String[][] printOptimumMatrix(int[][] t) {
+        String[][] table = new String[t.length][t[0].length];
+        for (int i = 0; i < t.length; i++) {
+            for (int j = 0; j < t[0].length; j++) {
+                table[i][j] = String.valueOf(t[i][j]);
+            }
+        }
+        return table;
+    }
 }
 
 

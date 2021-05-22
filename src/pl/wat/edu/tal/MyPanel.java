@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -21,6 +23,9 @@ public class MyPanel extends JPanel implements ActionListener {
     private JLabel timeFieldLabel;
     private JTextField timeField;
     private JLabel optimumResult;
+    private JTextField exactResult;
+    private JLabel timeOfExactAlgorithm;
+    private JTextField tfTimeOfExactA;
 
     private JLabel values;
     private JTextField valuesTextField;
@@ -28,15 +33,19 @@ public class MyPanel extends JPanel implements ActionListener {
     private JButton resultButton;
     private JTextArea areaOfWeights;
     private JTextArea areaOfValues;
+    private JButton exactAlgorithm;
+    private JButton flushButton;
+    private JButton exitButton;
 
     private ArrayList<Integer> arrayList;
     private ArrayList<Integer> arrayList1;
+    private JPanel jPanel;
 
     public MyPanel() {
-        JPanel jPanel = new JPanel();
-     setBackground(new Color(200,200,200,200));
-        jPanel.setBorder(BorderFactory.createEmptyBorder(20,5,20,5));
-        jPanel.setLayout(new GridLayout(4,2, 10, 5));
+        jPanel = new JPanel();
+        setBackground(new Color(200, 200, 200, 200));
+        jPanel.setBorder(BorderFactory.createEmptyBorder(20, 5, 20, 5));
+        jPanel.setLayout(new GridLayout(11, 2, 10, 5));
         jPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         knapsackCapacity = new JLabel("Capacity");
         jPanel.add(knapsackCapacity);
@@ -72,12 +81,33 @@ public class MyPanel extends JPanel implements ActionListener {
         jPanel.add(timeFieldLabel);
         timeField = new JTextField(10);
         jPanel.add(timeField);
+        exactAlgorithm = new JButton("Exact algorithm");
+        exactAlgorithm.addActionListener(this);
+        jPanel.add(exactAlgorithm);
+        exactResult = new JTextField(6);
+        jPanel.add(exactResult);
+        timeOfExactAlgorithm = new JLabel("Time of extract");
+        jPanel.add(timeOfExactAlgorithm);
+        tfTimeOfExactA = new JTextField(6);
+        jPanel.add(tfTimeOfExactA);
+        Image img = convertIconToGoodSize("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/clean.jpg");
+        flushButton = new JButton(new ImageIcon(img));
+        flushButton.setActionCommand("Flushdata");
+        flushButton.addActionListener(this::clearAllTextFields);
+        jPanel.add(flushButton);
+        Image image = convertIconToGoodSize("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/exit.png");
+        exitButton = new JButton(new ImageIcon(image));
+        exitButton.addActionListener(this::exitProgram);
+        jPanel.add(exitButton);
         add(jPanel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         knapsack = new Knapsack();
+        int knapsackCapacity;
+        int numOfObjects;
+
         Object source = e.getSource();
 
         if (source == jButton) {
@@ -101,17 +131,79 @@ public class MyPanel extends JPanel implements ActionListener {
             areaOfWeights.setText(napis.toString());
             areaOfValues.setText(napis2.toString());
         } else if (source == resultButton) {
-            Scanner sc = new Scanner(System.in);
-            int numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
-            int knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
-            double startTimeAlghoritm = System.currentTimeMillis();
-            int optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, numOfObjects);
-            double endTimeAlghoritm = System.currentTimeMillis();
-            double diference = endTimeAlghoritm - startTimeAlghoritm;
-            resultTextfield.setText(String.valueOf(optimum));
-            timeField.setText(diference + " ms");
+            numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
+            knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
+            double startTimeAlgorithm = System.currentTimeMillis();
+            int[][] optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, numOfObjects);
+            double endTimeAlgorithm = System.currentTimeMillis();
+            double difference = endTimeAlgorithm - startTimeAlgorithm;
+            resultTextfield.setText(String.valueOf(optimum[numOfObjects][knapsackCapacity]));
+            timeField.setText(difference + " ms");
+            String[][] tablica = knapsack.printOptimumMatrix(optimum);
+
+            JFrame frame = new JFrame();
+            MatrixPanel matrixPanel = new MatrixPanel(tablica);
+            frame.setTitle("Matrix of optimus ");
+            frame.add(matrixPanel);
+            frame.setVisible(true);
+            frame.pack();
+
+        } else if (source == exactAlgorithm) {
+            numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
+            knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
+            double startTimeAlgorithm = System.currentTimeMillis();
+            int result = knapsack.exactAlgorithm(arrayList, arrayList1, knapsackCapacity, numOfObjects);
+            double endTimeAlgorithm = System.currentTimeMillis();
+            double difference = endTimeAlgorithm - startTimeAlgorithm;
+            exactResult.setText(String.valueOf(result));
+            tfTimeOfExactA.setText(difference + " ms");
+
         }
     }
+
+    /**
+     * Method which clears all textFields
+     *
+     * @param actionEvent
+     */
+    public void clearAllTextFields(ActionEvent actionEvent) {
+        String action = actionEvent.getActionCommand();
+        if (action == "Flushdata") {
+            JTextField tmp;
+            for (Component component : jPanel.getComponents()) {
+                if (component.getClass().toString().contains("javax.swing.JTextField")) {
+                    tmp = (JTextField) component;
+                    tmp.setText(null);
+                }
+            }
+        }
+    }
+
+    /**
+     * ActionEvent which asks user whether he wants to exit from programme
+     *
+     * @param actionEvent
+     */
+    public void exitProgram(ActionEvent actionEvent) {
+        int exit = JOptionPane.showConfirmDialog(jPanel, "Do you want to leave programme?", "Exit panel", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) {
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Method which convert iconimage to proper size on JButton
+     *
+     * @param filepath is the path to location of file
+     * @return new Image
+     */
+    public Image convertIconToGoodSize(String filepath) {
+        ImageIcon imageIcon = new ImageIcon(filepath);
+        Image image = imageIcon.getImage();
+        Image image1 = image.getScaledInstance(150, 30, java.awt.Image.SCALE_SMOOTH);
+        return image1;
+    }
+
     public JButton createButton(String text, int x, int y, int width, String actionCommand) {
         JButton jButton1 = new JButton(text);
         jButton1.setBackground(new Color(140, 210, 38));
@@ -122,4 +214,5 @@ public class MyPanel extends JPanel implements ActionListener {
         jButton1.addActionListener(this);
         return jButton1;
     }
+
 }

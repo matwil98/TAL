@@ -1,5 +1,6 @@
 package pl.wat.edu.tal;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
