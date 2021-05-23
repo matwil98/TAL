@@ -11,26 +11,37 @@ public class Knapsack {
     String sumProfits_sumWeights;
 
     public int[][] solveKnapsackProblemTest(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems) {
-        ArrayList<Integer> takenElements = new ArrayList<>();
+        int operation = 0;
+        ComplexityCounter complexityCounter = new ComplexityCounter(0);
         if (countWeightsOfAllItems(weights) <= capacity) {
             System.out.println("You can pack all items. Using alghoritm is unnecessary");
         } else if (numberOfItems <= 0) {
             System.out.println("You have to have positive number of items!");
         }
         int[][] knapsackTable = new int[numberOfItems + 1][capacity + 1];
-        for (int j = 0; j <= capacity; j++) knapsackTable[0][j] = 0;
+        for (int j = 0; j < capacity; j++) {
+            knapsackTable[0][j] = 0;
+            operation++;
+            complexityCounter.setCounterOperation(operation);
+        }
+
 
         for (int i = 1; i <= numberOfItems; i++) {
-            for (int w = 0; w <= capacity; w++) {
+            for (int w = 1; w <= capacity; w++) {
                 if (weights.get(i - 1) > w) {
                     knapsackTable[i][w] = knapsackTable[i - 1][w];
+                    operation++;
+                    complexityCounter.setCounterOperation(operation);
                 } else {
                     knapsackTable[i][w] = Math.max(
                             knapsackTable[i - 1][w],
                             knapsackTable[i - 1]
                                     [w - weights.get(i - 1)] + values.get(i - 1));
+                    operation++;
+                    complexityCounter.setCounterOperation(operation);
                 }
             }
+            System.out.println("Liczba operacji wykonanych " + complexityCounter.getCounterOperation());
         }
 
         return knapsackTable;

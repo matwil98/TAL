@@ -2,16 +2,13 @@ package pl.wat.edu.tal;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MatrixPanel extends JPanel {
 
    private String [][] matrix;
-   private ArrayList<Integer> takenElements;
-   private MyPanel myPanel;
-    public MatrixPanel(String [][] matrix, ArrayList<Integer> takenElements){
+
+    public MatrixPanel(String [][] matrix){
         this.matrix = matrix;
-        this.takenElements = takenElements;
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(matrix.length, matrix[0].length));
         for (String[] strings : matrix) {

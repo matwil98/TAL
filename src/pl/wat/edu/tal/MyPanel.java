@@ -26,6 +26,7 @@ public class MyPanel extends JPanel implements ActionListener {
     private JTextField exactResult;
     private JLabel timeOfExactAlgorithm;
     private JTextField tfTimeOfExactA;
+    private JLabel optimumExactFieldLabel;
 
     private JLabel values;
     private JTextField valuesTextField;
@@ -36,6 +37,7 @@ public class MyPanel extends JPanel implements ActionListener {
     private JButton exactAlgorithm;
     private JButton flushButton;
     private JButton exitButton;
+    private JButton showComplexity;
 
     private ArrayList<Integer> arrayList;
     private ArrayList<Integer> arrayList1;
@@ -45,7 +47,7 @@ public class MyPanel extends JPanel implements ActionListener {
         jPanel = new JPanel();
         setBackground(new Color(200, 200, 200, 200));
         jPanel.setBorder(BorderFactory.createEmptyBorder(20, 5, 20, 5));
-        jPanel.setLayout(new GridLayout(11, 2, 10, 5));
+        jPanel.setLayout(new GridLayout(12, 2, 10, 5));
         jPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         knapsackCapacity = new JLabel("Capacity");
         jPanel.add(knapsackCapacity);
@@ -84,12 +86,17 @@ public class MyPanel extends JPanel implements ActionListener {
         exactAlgorithm = new JButton("Exact algorithm");
         exactAlgorithm.addActionListener(this);
         jPanel.add(exactAlgorithm);
+        timeOfExactAlgorithm = new JLabel("Optimum result");
+        jPanel.add(timeOfExactAlgorithm);
         exactResult = new JTextField(6);
         jPanel.add(exactResult);
-        timeOfExactAlgorithm = new JLabel("Time of extract");
+        timeOfExactAlgorithm = new JLabel("Time of running algorithm");
         jPanel.add(timeOfExactAlgorithm);
         tfTimeOfExactA = new JTextField(6);
         jPanel.add(tfTimeOfExactA);
+        showComplexity = new JButton("Show complexity");
+        showComplexity.addActionListener(this);
+        jPanel.add(showComplexity);
         Image img = convertIconToGoodSize("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/clean.jpg");
         flushButton = new JButton(new ImageIcon(img));
         flushButton.setActionCommand("Flushdata");
@@ -105,8 +112,15 @@ public class MyPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         knapsack = new Knapsack();
-        int knapsackCapacity;
-        int numOfObjects;
+        int knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
+        int numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
+        int[][] optimum = new int[numOfObjects+1][knapsackCapacity+1];
+        ArrayList<Integer> takenElements;
+        //to co ponizej to bylo wczesniej deklarowane wewnatrz source == jButton
+
+
+//                    arrayList = knapsack.convertToArrayList(numOfObjects, scopeOfWeights);
+//            arrayList1 = knapsack.convertToArrayList(numOfObjects, scopeOfValues);
 
         Object source = e.getSource();
 
@@ -133,34 +147,52 @@ public class MyPanel extends JPanel implements ActionListener {
         } else if (source == resultButton) {
             numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
             knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
-            double startTimeAlgorithm = System.currentTimeMillis();
-            int[][] optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, numOfObjects);
-            double endTimeAlgorithm = System.currentTimeMillis();
+            double startTimeAlgorithm = System.nanoTime();
+            optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, numOfObjects);
+            double endTimeAlgorithm = System.nanoTime();
             double difference = endTimeAlgorithm - startTimeAlgorithm;
             resultTextfield.setText(String.valueOf(optimum[numOfObjects][knapsackCapacity]));
-            timeField.setText(difference + " ms");
-            ArrayList<Integer> testArray = knapsack.takenElements(optimum, arrayList, arrayList1, numOfObjects, knapsackCapacity);
+            timeField.setText(difference + " us");
             String[][] matrix = knapsack.printOptimumMatrix(optimum);
-            ArrayList<Integer> takenElements = knapsack.takenElements(optimum,arrayList,arrayList1,numOfObjects,knapsackCapacity);
 
             JFrame frame = new JFrame();
-            MatrixPanel matrixPanel = new MatrixPanel(matrix, takenElements);
+            MatrixPanel matrixPanel = new MatrixPanel(matrix);
             frame.setTitle("Matrix of optimum results ");
+            ImageIcon icon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/matrix.png");
+            frame.setIconImage(icon.getImage());
             frame.add(matrixPanel);
             frame.setVisible(true);
+            frame.setLocation(40, 100);
             frame.pack();
 
         } else if (source == exactAlgorithm) {
             numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
             knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
-            double startTimeAlgorithm = System.currentTimeMillis();
+            double startTimeAlgorithm = System.nanoTime();
             int result = knapsack.exactAlgorithm(arrayList, arrayList1, knapsackCapacity, numOfObjects);
-            double endTimeAlgorithm = System.currentTimeMillis();
+            double endTimeAlgorithm = System.nanoTime();
             double difference = endTimeAlgorithm - startTimeAlgorithm;
             exactResult.setText(String.valueOf(result));
-            tfTimeOfExactA.setText(difference + " ms");
-
+            tfTimeOfExactA.setText(difference + " us");
+        } else if (source == showComplexity) {
+            for(int k =0; k<optimum.length; k++){
+                for(int w = 0; w<optimum[0].length; w++){
+                    System.out.print(optimum[k][w] + " ");
+                }
+                System.out.println();
+            }
+            takenElements = knapsack.takenElements(optimum, arrayList, arrayList1, numOfObjects, knapsackCapacity);
+            System.out.println(takenElements);
+            ComplexityPanel complexityPanel = new ComplexityPanel(takenElements);
+            JFrame jFrame = new JFrame();
+            jFrame.setTitle("Complexity of DP and extract algorithm");
+            jFrame.add(complexityPanel);
+            jFrame.setVisible(true);
+            jFrame.setLocation(440,100);
+            jFrame.pack();
+            System.out.println("Clicekd");
         }
+
     }
 
     /**

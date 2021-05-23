@@ -19,11 +19,10 @@ public class MyFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon imageIcon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/plecak.jpg");
         setIconImage(imageIcon.getImage());
-        setLocation(100, 100);
+        setLocation(450, 40);
 
         myPanel = new MyPanel();
         setContentPane(myPanel);
-        setLocationRelativeTo(null);
         pack();
         setVisible(true);
     }
