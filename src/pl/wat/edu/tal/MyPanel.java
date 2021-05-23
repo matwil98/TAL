@@ -114,13 +114,9 @@ public class MyPanel extends JPanel implements ActionListener {
         knapsack = new Knapsack();
         int knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
         int numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
-        int[][] optimum = new int[numOfObjects+1][knapsackCapacity+1];
+        int[][] optimum;
         ArrayList<Integer> takenElements;
-        //to co ponizej to bylo wczesniej deklarowane wewnatrz source == jButton
 
-
-//                    arrayList = knapsack.convertToArrayList(numOfObjects, scopeOfWeights);
-//            arrayList1 = knapsack.convertToArrayList(numOfObjects, scopeOfValues);
 
         Object source = e.getSource();
 
@@ -147,8 +143,9 @@ public class MyPanel extends JPanel implements ActionListener {
         } else if (source == resultButton) {
             numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
             knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
+            ComplexityCounter complexityCounter = new ComplexityCounter();
             double startTimeAlgorithm = System.nanoTime();
-            optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, numOfObjects);
+            optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, knapsackCapacity, numOfObjects, complexityCounter);
             double endTimeAlgorithm = System.nanoTime();
             double difference = endTimeAlgorithm - startTimeAlgorithm;
             resultTextfield.setText(String.valueOf(optimum[numOfObjects][knapsackCapacity]));
@@ -164,6 +161,17 @@ public class MyPanel extends JPanel implements ActionListener {
             frame.setVisible(true);
             frame.setLocation(40, 100);
             frame.pack();
+            takenElements = knapsack.takenElements(optimum, arrayList, arrayList1, numOfObjects, knapsackCapacity);
+
+            ComplexityPanel complexityPanel = new ComplexityPanel(takenElements);
+            JFrame jFrame = new JFrame();
+            ImageIcon imageIcon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/elements.jpg");
+            jFrame.setIconImage(imageIcon.getImage());
+            jFrame.setTitle("Taken elements");
+            jFrame.add(complexityPanel);
+            jFrame.setVisible(true);
+            jFrame.setLocation(40, 380);
+            jFrame.pack();
 
         } else if (source == exactAlgorithm) {
             numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
@@ -174,25 +182,8 @@ public class MyPanel extends JPanel implements ActionListener {
             double difference = endTimeAlgorithm - startTimeAlgorithm;
             exactResult.setText(String.valueOf(result));
             tfTimeOfExactA.setText(difference + " us");
-        } else if (source == showComplexity) {
-            for(int k =0; k<optimum.length; k++){
-                for(int w = 0; w<optimum[0].length; w++){
-                    System.out.print(optimum[k][w] + " ");
-                }
-                System.out.println();
-            }
-            takenElements = knapsack.takenElements(optimum, arrayList, arrayList1, numOfObjects, knapsackCapacity);
-            System.out.println(takenElements);
-            ComplexityPanel complexityPanel = new ComplexityPanel(takenElements);
-            JFrame jFrame = new JFrame();
-            jFrame.setTitle("Complexity of DP and extract algorithm");
-            jFrame.add(complexityPanel);
-            jFrame.setVisible(true);
-            jFrame.setLocation(440,100);
-            jFrame.pack();
-            System.out.println("Clicekd");
-        }
 
+        }
     }
 
     /**
@@ -204,10 +195,17 @@ public class MyPanel extends JPanel implements ActionListener {
         String action = actionEvent.getActionCommand();
         if (action == "Flushdata") {
             JTextField tmp;
+            JTextArea tmp2;
             for (Component component : jPanel.getComponents()) {
-                if (component.getClass().toString().contains("javax.swing.JTextField") || component.getClass().toString().contains("javax.swing.JFrame")) {
+                if (component.getClass().toString().contains("javax.swing.JTextField")) {
                     tmp = (JTextField) component;
                     tmp.setText(null);
+                }
+            }
+            for (Component component : jPanel.getComponents()) {
+                if (component.getClass().toString().contains("javax.swing.JTextArea")) {
+                    tmp2 = (JTextArea) component;
+                    tmp2.setText(null);
                 }
             }
         }

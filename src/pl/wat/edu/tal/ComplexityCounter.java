@@ -1,13 +1,11 @@
 package pl.wat.edu.tal;
 
 public class ComplexityCounter {
-    private int counterOperation;
+    private int counterOperation = 0;
 
-
-    public ComplexityCounter(int operation){
-        this.counterOperation +=operation;
+    public void increaseCounterOfOperation(int value){
+        this.counterOperation += value;
     }
-
     public int getCounterOperation() {
         return counterOperation;
     }
