@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class MyPanel extends JPanel implements ActionListener {
 
@@ -26,7 +24,6 @@ public class MyPanel extends JPanel implements ActionListener {
     private JTextField exactResult;
     private JLabel timeOfExactAlgorithm;
     private JTextField tfTimeOfExactA;
-    private JLabel optimumExactFieldLabel;
 
     private JLabel values;
     private JTextField valuesTextField;
@@ -37,7 +34,7 @@ public class MyPanel extends JPanel implements ActionListener {
     private JButton exactAlgorithm;
     private JButton flushButton;
     private JButton exitButton;
-    private JButton showComplexity;
+    private JButton saveToFile;
 
     private ArrayList<Integer> arrayList;
     private ArrayList<Integer> arrayList1;
@@ -68,10 +65,13 @@ public class MyPanel extends JPanel implements ActionListener {
         areaOfWeights = new JTextArea("Wagi przedmiotów", 2, 10);
         areaOfValues = new JTextArea("Wartości przedmiotów", 2, 10);
         jButton = new JButton("Draw");
+        jButton.setBackground(new Color(100,200,122));
+        jButton.setActionCommand("draw");
         jButton.addActionListener(this);
         jPanel.add(jButton);
         resultButton = new JButton("DP alghoritm");
         resultButton.addActionListener(this);
+        resultButton.setBackground(new Color(220,130,20));
         jPanel.add(resultButton);
         jPanel.add(areaOfWeights);
         jPanel.add(areaOfValues);
@@ -85,6 +85,7 @@ public class MyPanel extends JPanel implements ActionListener {
         jPanel.add(timeField);
         exactAlgorithm = new JButton("Exact algorithm");
         exactAlgorithm.addActionListener(this);
+        exactAlgorithm.setBackground(new Color(220,130,20));
         jPanel.add(exactAlgorithm);
         timeOfExactAlgorithm = new JLabel("Optimum result");
         jPanel.add(timeOfExactAlgorithm);
@@ -94,9 +95,9 @@ public class MyPanel extends JPanel implements ActionListener {
         jPanel.add(timeOfExactAlgorithm);
         tfTimeOfExactA = new JTextField(6);
         jPanel.add(tfTimeOfExactA);
-        showComplexity = new JButton("Show complexity");
-        showComplexity.addActionListener(this);
-        jPanel.add(showComplexity);
+        saveToFile = new JButton("Save results to file");
+        saveToFile.addActionListener(this);
+        jPanel.add(saveToFile);
         Image img = convertIconToGoodSize("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/clean.jpg");
         flushButton = new JButton(new ImageIcon(img));
         flushButton.setActionCommand("Flushdata");
@@ -112,13 +113,13 @@ public class MyPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         knapsack = new Knapsack();
-        int knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
-        int numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
+        int knapsackCapacity;
+        int numOfObjects;
         int[][] optimum;
         ArrayList<Integer> takenElements;
 
-
         Object source = e.getSource();
+        String choice = e.getActionCommand();
 
         if (source == jButton) {
             int number = Integer.parseInt(numOfObjectsTextField.getText());
@@ -182,8 +183,16 @@ public class MyPanel extends JPanel implements ActionListener {
             double difference = endTimeAlgorithm - startTimeAlgorithm;
             exactResult.setText(String.valueOf(result));
             tfTimeOfExactA.setText(difference + " us");
-
+        } else if(source == saveToFile){
+            int [] t = new int[]{1,2,3,4,5,6};
+            FileExecutor fe = new FileExecutor();
+            try {
+                fe.writeTableToFile(t, "test.txt");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
+
     }
 
     /**
