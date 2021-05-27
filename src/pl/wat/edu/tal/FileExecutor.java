@@ -10,10 +10,6 @@ public class FileExecutor {
     private String filename;
     private Random random;
 
-    public FileExecutor() {
-
-    }
-
     public int[] randomTable() {
         System.out.println("Enter the length of table: ");
         random = new Random();
@@ -62,7 +58,6 @@ public class FileExecutor {
             }
         }
         System.out.println(stringBuilder.toString());
-
     }
 
     public void writeWeightsValuesTakenElements(ArrayList<Integer> w, ArrayList<Integer> v, int optimum, String filename) throws IOException {
@@ -87,7 +82,6 @@ public class FileExecutor {
             for (Integer integer : w) {
                 fileWriter.write(integer.toString() + ' ');
             }
-
             countOfRows = 1;
             if (countOfRows == 1) {
                 fileWriter.write("\n");
@@ -98,14 +92,11 @@ public class FileExecutor {
                     fileWriter.write("\n");
                 }
             }
-
             for (Integer integer : v) {
                 fileWriter.write(integer.toString() + ' ');
             }
         }
-
         bufferedWriter.flush();
         bufferedWriter.close();
-
     }
 }

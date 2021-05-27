@@ -33,7 +33,6 @@ public class GUI {
     private JLabel timeOfExactAlgorithm;
     private JTextField timeDiffernece;
 
-
     private ArrayList<Integer> arrayList;
     private ArrayList<Integer> arrayList1;
     private int capacity;
@@ -48,15 +47,12 @@ public class GUI {
     double startTimeAlgorithmEA;
     double endTimeAlgorithmEA;
 
-
     public GUI() {
-
 
         jButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Knapsack knapsack = new Knapsack();
-
                 int number = Integer.parseInt(numOfObjectsTextField.getText());
                 int scopeOfWeights = Integer.parseInt(scopeOfWeightsTextField.getText());
                 int scopeOfValues = Integer.parseInt(valuesTextField.getText());
@@ -77,7 +73,6 @@ public class GUI {
                         napis.replace(napis.length() - 1, napis.length(), " ");
                         napis2.replace(napis2.length() - 1, napis2.length(), " ");
                     }
-
                 }
                 areaOfWeights.setText(napis.toString());
                 areaOfWeights.setLineWrap(true);
@@ -100,11 +95,9 @@ public class GUI {
                 nOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
                 capacity = Integer.parseInt(knapsackCapacityField.getText());
                 ComplexityCounter complexityCounter = new ComplexityCounter();
-//                double startTimeAlgorithm = System.nanoTime();
                 startTimeAlgorithmDP = System.nanoTime();
                 optimum = knapsack.solveKnapsackProblemTest(arrayList, arrayList1, capacity, nOfObjects, complexityCounter);
                 endTimeAlgorithmDP = System.nanoTime();
-//                double endTimeAlgorithm = System.nanoTime();
                 double difference = endTimeAlgorithmDP - startTimeAlgorithmDP;
                 resultTextfield.setText(String.valueOf(optimum[nOfObjects][capacity]));
                 timeField.setText(difference + " ns");
@@ -130,7 +123,6 @@ public class GUI {
                 jFrame.setVisible(true);
                 jFrame.setLocation(40, 380);
                 jFrame.pack();
-
             }
         });
 
@@ -138,7 +130,6 @@ public class GUI {
         flushButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 String action = e.getActionCommand();
                 if (action.equals("Flush data")) {
                     JTextField tmp;
@@ -156,7 +147,6 @@ public class GUI {
                         }
                     }
                 }
-
             }
         });
 
@@ -166,10 +156,8 @@ public class GUI {
                 Knapsack knapsack = new Knapsack();
                 nOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
                 capacity = Integer.parseInt(knapsackCapacityField.getText());
-//                double startTimeAlgorithm = System.nanoTime();
                 startTimeAlgorithmEA = System.nanoTime();
                 int result = knapsack.exactAlgorithm(arrayList, arrayList1, capacity, nOfObjects);
-//                double endTimeAlgorithm = System.nanoTime();
                 endTimeAlgorithmEA = System.nanoTime();
                 double difference = endTimeAlgorithmEA - startTimeAlgorithmEA;
                 exactResult.setText(String.valueOf(result));
@@ -180,7 +168,6 @@ public class GUI {
                 if (dpDiffernece < eaDifference) {
                      compareTime = (int)eaDifference/ (int)dpDiffernece;
                     timeDiffernece.setText("DP był szybszy ok. " + compareTime + " razy");
-
                 } else{
                     compareTime = (int) dpDiffernece / (int) eaDifference;
                     timeDiffernece.setText("EA był szybszy ok. " + compareTime + " razy");
@@ -189,14 +176,12 @@ public class GUI {
         });
     }
 
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("Discrete Knapsack problem");
         frame.setContentPane(new GUI().jPanel);
         ImageIcon imageIcon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/plecak.jpg");
         frame.setIconImage(imageIcon.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(650, 400);
         frame.setLocation(650,300);
         frame.pack();
         frame.setVisible(true);
