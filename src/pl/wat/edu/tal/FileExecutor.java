@@ -51,18 +51,61 @@ public class FileExecutor {
 
     public void readTableFromFile(String filename) throws IOException {
         File file = new File(filename);
-        if(!file.exists()){
+        if (!file.exists()) {
             file.createNewFile();
         }
         StringBuilder stringBuilder = new StringBuilder();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line).append("\n");
             }
         }
         System.out.println(stringBuilder.toString());
 
+    }
+
+    public void writeWeightsValuesTakenElements(ArrayList<Integer> w, ArrayList<Integer> v, int optimum, String filename) throws IOException {
+        File file = new File(filename);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        int countOfRows = 0;
+        int size = w.size();
+        if (w.size() != v.size()) {
+            System.out.println("Sizes of matrixes are not the same!");
+        } else {
+            for (int k = 1; k <= size; k++) {
+                fileWriter.write("w" + k + " ");
+                if (k == size) {
+                    fileWriter.write("\n");
+                }
+            }
+            for (Integer integer : w) {
+                fileWriter.write(integer.toString() + ' ');
+            }
+
+            countOfRows = 1;
+            if (countOfRows == 1) {
+                fileWriter.write("\n");
+            }
+            for (int l = 1; l <= size; l++) {
+                fileWriter.write("v" + l + " ");
+                if(l == size){
+                    fileWriter.write("\n");
+                }
+            }
+
+            for (Integer integer : v) {
+                fileWriter.write(integer.toString() + ' ');
+            }
+        }
+
+        bufferedWriter.flush();
+        bufferedWriter.close();
 
     }
 }

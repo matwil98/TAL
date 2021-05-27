@@ -21,6 +21,7 @@ public class MyPanel extends JPanel implements ActionListener {
     private JLabel timeFieldLabel;
     private JTextField timeField;
     private JLabel optimumResult;
+    private JLabel optimumExactResult;
     private JTextField exactResult;
     private JLabel timeOfExactAlgorithm;
     private JTextField tfTimeOfExactA;
@@ -87,8 +88,8 @@ public class MyPanel extends JPanel implements ActionListener {
         exactAlgorithm.addActionListener(this);
         exactAlgorithm.setBackground(new Color(220,130,20));
         jPanel.add(exactAlgorithm);
-        timeOfExactAlgorithm = new JLabel("Optimum result");
-        jPanel.add(timeOfExactAlgorithm);
+        optimumExactResult = new JLabel("Optimum result");
+        jPanel.add(optimumExactResult);
         exactResult = new JTextField(6);
         jPanel.add(exactResult);
         timeOfExactAlgorithm = new JLabel("Time of running algorithm");
@@ -96,6 +97,7 @@ public class MyPanel extends JPanel implements ActionListener {
         tfTimeOfExactA = new JTextField(6);
         jPanel.add(tfTimeOfExactA);
         saveToFile = new JButton("Save results to file");
+        saveToFile.setToolTipText("DUPAAAAAA");
         saveToFile.addActionListener(this);
         jPanel.add(saveToFile);
         Image img = convertIconToGoodSize("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/clean.jpg");
@@ -140,7 +142,12 @@ public class MyPanel extends JPanel implements ActionListener {
                 napis2.append(Arrays.toString(stringList2[i].split(",")));
             }
             areaOfWeights.setText(napis.toString());
+            areaOfWeights.setLineWrap(true);
+            areaOfWeights.setEditable(false);
             areaOfValues.setText(napis2.toString());
+            areaOfValues.setLineWrap(true);
+            areaOfValues.setEditable(false);
+
         } else if (source == resultButton) {
             numOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
             knapsackCapacity = Integer.parseInt(knapsackCapacityField.getText());
@@ -164,7 +171,7 @@ public class MyPanel extends JPanel implements ActionListener {
             frame.pack();
             takenElements = knapsack.takenElements(optimum, arrayList, arrayList1, numOfObjects, knapsackCapacity);
 
-            ComplexityPanel complexityPanel = new ComplexityPanel(takenElements);
+            ComplexityPanel complexityPanel = new ComplexityPanel(takenElements, arrayList1, arrayList);
             JFrame jFrame = new JFrame();
             ImageIcon imageIcon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/elements.jpg");
             jFrame.setIconImage(imageIcon.getImage());
@@ -182,7 +189,7 @@ public class MyPanel extends JPanel implements ActionListener {
             double endTimeAlgorithm = System.nanoTime();
             double difference = endTimeAlgorithm - startTimeAlgorithm;
             exactResult.setText(String.valueOf(result));
-            tfTimeOfExactA.setText(difference + " us");
+            tfTimeOfExactA.setText(difference + " ns");
         } else if(source == saveToFile){
             int [] t = new int[]{1,2,3,4,5,6};
             FileExecutor fe = new FileExecutor();
@@ -202,7 +209,7 @@ public class MyPanel extends JPanel implements ActionListener {
      */
     public void clearAllTextFields(ActionEvent actionEvent) {
         String action = actionEvent.getActionCommand();
-        if (action == "Flushdata") {
+        if (action.equals("Flushdata")) {
             JTextField tmp;
             JTextArea tmp2;
             for (Component component : jPanel.getComponents()) {

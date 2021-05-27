@@ -14,6 +14,7 @@ public class Knapsack {
 
     public int[][] solveKnapsackProblemTest(ArrayList<Integer> weights, ArrayList<Integer> values, int capacity, int numberOfItems, ComplexityCounter complexityCounter) {
         int operation = 1;
+//        complexityCounter.countInt(1);
         complexityCounter = new ComplexityCounter();
         complexityCounter.setCounterOperation(0);
         if (countWeightsOfAllItems(weights) <= capacity) {
@@ -22,7 +23,7 @@ public class Knapsack {
             System.out.println("You have to have positive number of items!");
         }
         int[][] knapsackTable = new int[numberOfItems + 1][capacity + 1];
-
+//        complexityCounter.countInt(knapsackTable.length *2);
         for (int i = 1; i <= numberOfItems; i++) {
             for (int w = 1; w <= capacity; w++) {
                 if (weights.get(i - 1) > w) {
@@ -185,8 +186,10 @@ public class Knapsack {
         for (int i = 0; i < number; i++) {
             int randomValue = random.nextInt(scope) + 1;
             arrayList.add(randomValue);
+            complexityCounter.countInt(arrayList.size());
         }
         System.out.println(arrayList);
+        System.out.println("Ilość intów: " + complexityCounter.getCounterOfInt());
         return arrayList;
     }
 

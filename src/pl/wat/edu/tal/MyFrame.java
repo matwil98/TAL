@@ -21,8 +21,10 @@ public class MyFrame extends JFrame {
         setIconImage(imageIcon.getImage());
         setLocation(450, 40);
 
+
         myPanel = new MyPanel();
         setContentPane(myPanel);
+
         pack();
         setVisible(true);
     }

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="pl.wat.edu.tal.GUI">
+  <grid id="27dc6" binding="jPanel" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="716" height="400"/>
+    </constraints>
+    <properties>
+      <autoscrolls value="false"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="20431" class="javax.swing.JTextField" binding="valuesTextField">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="4a9f4" class="javax.swing.JTextField" binding="scopeOfWeightsTextField">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="fa619" class="javax.swing.JTextField" binding="knapsackCapacityField">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="1c4a9" class="javax.swing.JTextField" binding="numOfObjectsTextField">
+        <constraints>
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="456c6" class="javax.swing.JLabel" binding="knapsackCapacity">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Capacity"/>
+        </properties>
+      </component>
+      <component id="20a59" class="javax.swing.JLabel" binding="numOfObjects">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="NumOfObjects"/>
+        </properties>
+      </component>
+      <component id="d4477" class="javax.swing.JLabel" binding="values">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Scope of values"/>
+        </properties>
+      </component>
+      <component id="d8bb9" class="javax.swing.JTextArea" binding="areaOfWeights">
+        <constraints>
+          <grid row="2" column="0" row-span="6" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <autoscrolls value="false"/>
+          <text value="Wagi przedmiotów"/>
+        </properties>
+      </component>
+      <component id="f14a5" class="javax.swing.JTextArea" binding="areaOfValues">
+        <constraints>
+          <grid row="2" column="1" row-span="6" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Wartości przedmiotów"/>
+        </properties>
+      </component>
+      <component id="6f726" class="javax.swing.JButton" binding="jButton">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-10172294"/>
+          <text value="Draw"/>
+        </properties>
+      </component>
+      <component id="29e16" class="javax.swing.JButton" binding="resultButton">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-2325996"/>
+          <text value="DP algorithm"/>
+        </properties>
+      </component>
+      <component id="15c17" class="javax.swing.JLabel" binding="optimumResult">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Optimum result"/>
+        </properties>
+      </component>
+      <component id="7641b" class="javax.swing.JLabel" binding="timeFieldLabel">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Time of running"/>
+        </properties>
+      </component>
+      <component id="73d36" class="javax.swing.JTextField" binding="resultTextfield">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="cfb81" class="javax.swing.JTextField" binding="timeField">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="d26b0" class="javax.swing.JButton" binding="flushButton">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-38560"/>
+          <text value="Flush data"/>
+        </properties>
+      </component>
+      <component id="97170" class="javax.swing.JButton" binding="exactAlgorithm">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <autoscrolls value="true"/>
+          <background color="-2325996"/>
+          <borderPainted value="false"/>
+          <focusPainted value="false"/>
+          <foreground color="-4473925"/>
+          <horizontalAlignment value="0"/>
+          <margin top="0" left="0" bottom="0" right="5"/>
+          <text value="Exact algorithm"/>
+          <toolTipText value=""/>
+          <verticalAlignment value="0"/>
+          <verticalTextPosition value="0"/>
+        </properties>
+      </component>
+      <component id="c5152" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Optimum result"/>
+        </properties>
+      </component>
+      <component id="55a49" class="javax.swing.JLabel" binding="timeOfExactAlgorithm">
+        <constraints>
+          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Time of running"/>
+        </properties>
+      </component>
+      <component id="7d501" class="javax.swing.JTextField" binding="exactResult">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="9b13b" class="javax.swing.JTextField" binding="tfTimeOfExactA">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="71822" class="javax.swing.JTextField" binding="timeDiffernece">
+        <constraints>
+          <grid row="8" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="e73f3" class="javax.swing.JLabel" binding="scopeOfWeights">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Scope of weights"/>
+        </properties>
+      </component>
+      <component id="2060c" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Porównanie czasowe działania algorytmu DP i EA"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
