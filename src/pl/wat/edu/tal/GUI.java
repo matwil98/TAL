@@ -2,6 +2,8 @@ package pl.wat.edu.tal;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GUI {
@@ -21,6 +23,7 @@ public class GUI {
     private JTextField tfTimeOfExactA;
     private JTextField resultTextfield;
     private JTextField timeDiffernece;
+    private JButton saveToFileButton;
 
     private ArrayList<Integer> arrayList;
     private ArrayList<Integer> arrayList1;
@@ -32,6 +35,7 @@ public class GUI {
     double endTimeAlgorithmDP;
     double startTimeAlgorithmEA;
     double endTimeAlgorithmEA;
+    int result = 0;
 
     public GUI() {
 
@@ -93,12 +97,12 @@ public class GUI {
             frame.pack();
             takenElements = knapsack.takenElements(optimum, arrayList, arrayList1, nOfObjects, capacity);
 
-            var complexityPanel = new ComplexityPanel(takenElements, arrayList1, arrayList);
+            var optimumPanel = new OptimumPanel(takenElements, arrayList1, arrayList);
             var jFrame = new JFrame();
             var imageIcon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/elements.jpg");
             jFrame.setIconImage(imageIcon.getImage());
             jFrame.setTitle("Taken elements");
-            jFrame.add(complexityPanel);
+            jFrame.add(optimumPanel);
             jFrame.setVisible(true);
             jFrame.setLocation(40, 380);
             jFrame.pack();
@@ -130,12 +134,7 @@ public class GUI {
             nOfObjects = Integer.parseInt(numOfObjectsTextField.getText());
             capacity = Integer.parseInt(knapsackCapacityField.getText());
             startTimeAlgorithmEA = System.nanoTime();
-            int result = 0;
-            try {
-                result = knapsack.exactAlgorithm(arrayList, arrayList1, capacity, nOfObjects);
-            } catch (LowCapacityException lowCapacityException) {
-                lowCapacityException.printStackTrace();
-            }
+            result = knapsack.exactAlgorithm(arrayList, arrayList1, capacity, nOfObjects);
             endTimeAlgorithmEA = System.nanoTime();
             double difference = endTimeAlgorithmEA - startTimeAlgorithmEA;
             exactResult.setText(String.valueOf(result));
@@ -144,22 +143,37 @@ public class GUI {
             double dpDiffernece = endTimeAlgorithmDP - startTimeAlgorithmDP;
             double eaDifference = endTimeAlgorithmEA - startTimeAlgorithmEA;
             if (dpDiffernece < eaDifference) {
-                 compareTime = (int)eaDifference/ (int)dpDiffernece;
+                compareTime = (int) eaDifference / (int) dpDiffernece;
                 timeDiffernece.setText("DP był szybszy ok. " + compareTime + " razy");
-            } else{
+            } else {
                 compareTime = (int) dpDiffernece / (int) eaDifference;
                 timeDiffernece.setText("EA był szybszy ok. " + compareTime + " razy");
             }
         });
+        saveToFileButton.addActionListener(e -> {
+            var fileExecutor = new FileExecutor();
+            var jFileChooser = new JFileChooser();
+            jFileChooser.setCurrentDirectory(new File("."));
+            int response = jFileChooser.showSaveDialog(jPanel);
+            if (response == JFileChooser.APPROVE_OPTION) {
+                try {
+                    fileExecutor.saveToFile(new File(jFileChooser.getSelectedFile().getAbsolutePath()), arrayList, arrayList1, takenElements, result);
+                    JOptionPane.showMessageDialog(jPanel, "Correct saved file", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         var frame = new JFrame("Discrete Knapsack problem");
         frame.setContentPane(new GUI().jPanel);
         var imageIcon = new ImageIcon("C:/studia/SEMESTR_8/TAL/KNAPSACK/TAL/plecak.jpg");
         frame.setIconImage(imageIcon.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocation(650,300);
+        frame.setLocation(650, 300);
         frame.pack();
         frame.setVisible(true);
     }
